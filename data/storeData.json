@@ -1,0 +1,82 @@
+{
+  "categories": [
+    {
+      "name": "Phones",
+      "items": [
+        {
+          "id": "p001",
+          "name": "iPhone 14",
+          "brand": "Apple",
+          "price": 950000,
+          "currency": "NGN",
+          "stock": 5,
+          "description": "6.1-inch Super Retina XDR display, 128GB, 48MP main camera."
+        },
+        {
+          "id": "p002",
+          "name": "Samsung Galaxy A54",
+          "brand": "Samsung",
+          "price": 390000,
+          "currency": "NGN",
+          "stock": 10,
+          "description": "6.4-inch AMOLED 120Hz display, 128GB storage, 50MP camera."
+        },
+        {
+          "id": "p003",
+          "name": "Infinix Note 30",
+          "brand": "Infinix",
+          "price": 180000,
+          "currency": "NGN",
+          "stock": 8,
+          "description": "6.78-inch display, Helio G99, 8GB RAM + 128GB storage."
+        }
+      ]
+    },
+    {
+      "name": "Laptops",
+      "items": [
+        {
+          "id": "l001",
+          "name": "MacBook Air M2",
+          "brand": "Apple",
+          "price": 1250000,
+          "currency": "NGN",
+          "stock": 3,
+          "description": "13.6-inch Retina display, 8GB RAM, 256GB SSD, M2 chip."
+        },
+        {
+          "id": "l002",
+          "name": "HP Pavilion 15",
+          "brand": "HP",
+          "price": 480000,
+          "currency": "NGN",
+          "stock": 7,
+          "description": "15.6-inch display, Intel i5, 8GB RAM, 512GB SSD."
+        }
+      ]
+    },
+    {
+      "name": "Accessories",
+      "items": [
+        {
+          "id": "a001",
+          "name": "AirPods",
+          "brand": "Apple",
+          "price": 220000,
+          "currency": "NGN",
+          "stock": 12,
+          "description": "Active Noise Cancellation, wireless charging case."
+        },
+        {
+          "id": "a002",
+          "name": "Anker PowerCore 20000mAh",
+          "brand": "Anker",
+          "price": 35000,
+          "currency": "NGN",
+          "stock": 20,
+          "description": "High-capacity portable charger with fast USB-C charging."
+        }
+      ]
+    }
+  ]
+}

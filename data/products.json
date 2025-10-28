@@ -1,0 +1,57 @@
+[
+  {
+    "id": "P001",
+    "name": "iPhone 14 Pro",
+    "brand": "Apple",
+    "category": "Phones",
+    "price": 1150000,
+    "currency": "NGN",
+    "stock": 8,
+    "description": "Apple iPhone 14 Pro with 128GB storage, 48MP camera, and A16 Bionic chip.",
+    "tags": ["smartphone", "ios", "premium"]
+  },
+  {
+    "id": "P002",
+    "name": "Samsung Galaxy S23 Ultra",
+    "brand": "Samsung",
+    "category": "Phones",
+    "price": 900000,
+    "currency": "NGN",
+    "stock": 5,
+    "description": "6.8-inch display, 200MP camera, S-Pen support, and Snapdragon 8 Gen 2 chip.",
+    "tags": ["android", "flagship", "camera"]
+  },
+  {
+    "id": "P003",
+    "name": "AirPods Pro (2nd Gen)",
+    "brand": "Apple",
+    "category": "Accessories",
+    "price": 220000,
+    "currency": "NGN",
+    "stock": 15,
+    "description": "Noise-cancelling earbuds with adaptive transparency and spatial audio.",
+    "tags": ["audio", "earbuds", "wireless"]
+  },
+  {
+    "id": "P004",
+    "name": "Infinix Zero 30",
+    "brand": "Infinix",
+    "category": "Phones",
+    "price": 270000,
+    "currency": "NGN",
+    "stock": 10,
+    "description": "Stylish design, 108MP camera, 5000mAh battery, and 120Hz AMOLED screen.",
+    "tags": ["android", "budget", "camera"]
+  },
+  {
+    "id": "P005",
+    "name": "Apple Watch Series 9",
+    "brand": "Apple",
+    "category": "Wearables",
+    "price": 550000,
+    "currency": "NGN",
+    "stock": 6,
+    "description": "Latest Apple Watch with double-tap gesture, brighter display, and health tracking.",
+    "tags": ["wearable", "fitness", "health"]
+  }
+]

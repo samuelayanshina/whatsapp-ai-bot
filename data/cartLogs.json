@@ -1,0 +1,136 @@
+[
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": null,
+    "timestamp": "2025-10-19T12:24:56.892Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "iPhone 14",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-19T12:45:03.411Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "AirPods",
+    "price": 220000,
+    "total": 1170000,
+    "timestamp": "2025-10-19T12:45:19.689Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": "unknown",
+    "price": 0,
+    "total": 0,
+    "timestamp": "2025-10-19T12:55:06.922Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "iPhone 14",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-19T13:59:21.841Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "AirPods",
+    "price": 220000,
+    "total": 1170000,
+    "timestamp": "2025-10-19T13:59:27.751Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": "unknown",
+    "price": 0,
+    "total": 0,
+    "timestamp": "2025-10-19T13:59:45.182Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CHECKOUT",
+    "product": "Order",
+    "price": 1170000,
+    "total": 1170000,
+    "timestamp": "2025-10-19T13:59:45.238Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "iPhone 14",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-21T20:32:08.458Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "AirPods",
+    "price": 220000,
+    "total": 1170000,
+    "timestamp": "2025-10-21T20:32:16.455Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": "unknown",
+    "price": 0,
+    "total": 0,
+    "timestamp": "2025-10-21T20:32:26.555Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CHECKOUT",
+    "product": "Order",
+    "price": 1170000,
+    "total": 1170000,
+    "timestamp": "2025-10-21T20:32:26.596Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "iPhone 14",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-21T20:37:22.014Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": "unknown",
+    "price": 0,
+    "total": 0,
+    "timestamp": "2025-10-21T20:37:36.269Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CHECKOUT",
+    "product": "Order",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-21T20:37:36.317Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "ADD",
+    "product": "iPhone 14",
+    "price": 950000,
+    "total": 950000,
+    "timestamp": "2025-10-21T20:41:47.245Z"
+  },
+  {
+    "userId": "2348114587431@c.us",
+    "action": "CLEAR",
+    "product": "unknown",
+    "price": 0,
+    "total": 0,
+    "timestamp": "2025-10-21T20:42:31.337Z"
+  }
+]

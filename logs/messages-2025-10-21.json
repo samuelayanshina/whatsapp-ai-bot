@@ -1,0 +1,188 @@
+[
+  {
+    "timestamp": "2025-10-21T20:32:09.697Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T20:32:16.564Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T20:32:21.630Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-21T20:32:26.556Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-114758"
+  },
+  {
+    "timestamp": "2025-10-21T20:32:26.595Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-114758\n📅 *Date:* 10/21/2025, 9:32:26 PM\n\n1. *iPhone 14* — ₦950,000\n2. *AirPods* — ₦220,000\n\n💰 *Total:* ₦1,170,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-21T20:37:22.116Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T20:37:30.795Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n\n💰 *Total:* ₦950,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-21T20:37:36.269Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-821924"
+  },
+  {
+    "timestamp": "2025-10-21T20:37:36.317Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-821924\n📅 *Date:* 10/21/2025, 9:37:36 PM\n\n1. *iPhone 14* — ₦950,000\n\n💰 *Total:* ₦950,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-21T20:37:46.563Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍 *Your Past Orders:*\n\n🧾 *Order on:* 10/19/2025, 2:59:45 PM\n💰 *Total:* ₦1,170,000\n\n🧾 *Order on:* 10/21/2025, 9:32:26 PM\n💰 *Total:* ₦1,170,000\n\n🧾 *Order on:* 10/21/2025, 9:37:36 PM\n💰 *Total:* ₦950,000\n\n"
+  },
+  {
+    "timestamp": "2025-10-21T20:41:47.356Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T20:42:02.055Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T20:42:31.337Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-862242"
+  },
+  {
+    "timestamp": "2025-10-21T20:42:31.890Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-862242\n📅 *Date:* 10/21/2025, 9:42:31 PM\n\n1. *iPhone 14* — ₦950,000\n\n💰 *Total:* ₦950,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-21T20:42:46.844Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍 *Your Past Orders:*\n\n🧾 *Order on:* 10/19/2025, 2:59:45 PM\n\n💰 *Total:* ₦1,170,000\n\n🧾 *Order on:* 10/21/2025, 9:32:26 PM\n\n💰 *Total:* ₦1,170,000\n\n🧾 *Order on:* 10/21/2025, 9:37:36 PM\n\n💰 *Total:* ₦950,000\n\n"
+  },
+  {
+    "timestamp": "2025-10-21T20:56:30.931Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Good evening 🌇"
+  },
+  {
+    "timestamp": "2025-10-21T20:56:51.479Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hey there! Hope you’re getting ready for some quality relaxation time tonight. If I can assist in any way, just let me know. Have a great evening ahead! 🌙✨"
+  },
+  {
+    "timestamp": "2025-10-21T21:11:05.960Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T21:11:10.687Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n\n💰 *Total:* ₦950,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-21T21:11:41.552Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n\n💰 *Total:* ₦950,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-21T21:51:03.233Z",
+    "userId": "2348114587431@c.us",
+    "direction": "in",
+    "message": "show phones under 500k"
+  },
+  {
+    "timestamp": "2025-10-21T21:51:03.650Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "📱 *AirPods Pro (2nd Gen)* — ₦220,000.00\n📱 *Infinix Zero 30* — ₦270,000.00"
+  },
+  {
+    "timestamp": "2025-10-21T21:51:51.048Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n\n💰 *Total:* ₦950,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-21T21:51:58.630Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-364538"
+  },
+  {
+    "timestamp": "2025-10-21T21:51:58.686Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-364538\n📅 *Date:* 10/21/2025, 10:51:58 PM\n\n1. *iPhone 14* — ₦950,000\n\n💰 *Total:* ₦950,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-21T21:52:14.983Z",
+    "userId": "2348114587431@c.us",
+    "direction": "in",
+    "message": "Show phones under 500k"
+  },
+  {
+    "timestamp": "2025-10-21T21:52:15.025Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "📱 *AirPods Pro (2nd Gen)* — ₦220,000.00\n📱 *Infinix Zero 30* — ₦270,000.00"
+  },
+  {
+    "timestamp": "2025-10-21T22:35:53.436Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14 Pro* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T22:36:05.140Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14 Pro* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T22:36:12.614Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods Pro (2nd Gen)* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-21T22:36:27.652Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *Infinix Zero 30* to your cart.\n🛒 You can say “show my cart” to view it."
+  }
+]

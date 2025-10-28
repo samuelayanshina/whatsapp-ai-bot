@@ -1,0 +1,260 @@
+[
+  {
+    "timestamp": "2025-10-19T10:18:53.130Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:21:23.835Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:21:37.846Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-19T10:21:53.358Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🧾 *Checkout Summary*\n\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\n🆔 *Order ID:* ORD-825448\n\nReply with *confirm order* to place it."
+  },
+  {
+    "timestamp": "2025-10-19T10:22:09.948Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🎉 Thank you User!\n\nYour order has been confirmed ✅\n🆔 *Order ID:* ORD-399882\n💰 *Total Paid:* ₦1,170,000.00\n\nOur team will contact you shortly for delivery 🛵."
+  },
+  {
+    "timestamp": "2025-10-19T10:27:47.688Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:41:55.698Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:42:10.891Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:43:53.553Z",
+    "userId": "2348114587431@c.us",
+    "direction": "in",
+    "message": "Samsung Galaxy A54"
+  },
+  {
+    "timestamp": "2025-10-19T10:44:15.635Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "Hello there! It's great that you asked about your device – I'm here for all things smart tech, including handing out some sweet advice on gadgets like yours. The Samsung Galaxy A54 is a pretty solid choice with its impressive camera and battery life. If performance or features are what matter most to you, there might be newer models that could take your experience even further! 😊 Remember, I'm here if you have any questions about tech recommendations or anything else at all—just drop me a message whenever you need assistance."
+  },
+  {
+    "timestamp": "2025-10-19T10:44:24.962Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *Samsung Galaxy A54* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T10:46:02.368Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:21:57.771Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:24:16.555Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:24:21.986Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:24:49.409Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-19T12:24:56.893Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-639903"
+  },
+  {
+    "timestamp": "2025-10-19T12:24:57.172Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-639903\n📅 *Date:* 10/19/2025, 1:24:56 PM\n\n1. *iPhone 14* — ₦950,000\n2. *AirPods* — ₦220,000\n\n💰 *Total:* ₦1,170,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-19T12:45:03.508Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:45:20.005Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:45:25.250Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-19T12:55:00.997Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T12:55:06.922Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-135013"
+  },
+  {
+    "timestamp": "2025-10-19T12:55:07.300Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-135013\n📅 *Date:* 10/19/2025, 1:55:06 PM\n\n1. *iPhone 14* — ₦950,000\n2. *AirPods* — ₦220,000\n\n💰 *Total:* ₦1,170,000\n\nThank you for shopping with us! 🛍️"
+  },
+  {
+    "timestamp": "2025-10-19T12:57:17.112Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "How"
+  },
+  {
+    "timestamp": "2025-10-19T12:57:35.371Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hey there! It seems like you're ready for some information or help? What would you like assistance with today, User? Just ask away and I can provide support in any way I can! :) Remember, emojis are here too if they suit the vibe of our conversation."
+  },
+  {
+    "timestamp": "2025-10-19T12:57:36.524Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Who owns this glasses"
+  },
+  {
+    "timestamp": "2025-10-19T12:57:44.703Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hello! I'm sorry, but without more context it’d be difficult for me to determine ownership of your glasses. Maybe you can tell me a little bit about where they were left? Or any distinctive features that might help identify them? 😊 Let me know how I can assist further in finding the rightful owner!"
+  },
+  {
+    "timestamp": "2025-10-19T12:58:24.992Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Wow"
+  },
+  {
+    "timestamp": "2025-10-19T12:58:35.307Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hey there! :) Hope this brings some excitement into your day. If you're feeling lucky, maybe I can share a fun fact or two? Just say the word! Meanwhile, remember that wow-ing people isn't always about surprises – it’s also how we handle them 😉"
+  },
+  {
+    "timestamp": "2025-10-19T12:58:38.190Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Is this the stuff you said"
+  },
+  {
+    "timestamp": "2025-10-19T12:58:47.540Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hey there! Yes, I'm talking here with you – let’selive in communication style if that works for ya? How can I help today? :) If anything sounds off or unclear about my previous messages, feel free to tell me straight up so we can chat like normal people. And remember, your privacy is top priority! 🛡️"
+  },
+  {
+    "timestamp": "2025-10-19T12:59:42.593Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Great \n   Writing about himself 🤣"
+  },
+  {
+    "timestamp": "2025-10-19T12:59:53.556Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Haha, that's quite the expression of self-reflection! It seems like you’re really getting into describing yourself and your thoughts on writing. If there's anything specific about this topic or any kind of guidance I can provide as Jarvis to help refine those ideas, just let me know! 📝✨"
+  },
+  {
+    "timestamp": "2025-10-19T13:05:10.538Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "No english"
+  },
+  {
+    "timestamp": "2025-10-19T13:05:27.074Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Hi there! I understand that English isn't your first language, but don't worry—we can work through this together. If you have any questions or need explanations in another way, feel free to ask. Just say \"I'm confused\" whenever you want help clarifying something for me too. 😊 Remember, learning a new language is an amazing journey! You're doing great so far."
+  },
+  {
+    "timestamp": "2025-10-19T13:08:34.747Z",
+    "userId": "2348038760492@c.us",
+    "direction": "in",
+    "message": "Same"
+  },
+  {
+    "timestamp": "2025-10-19T13:08:46.659Z",
+    "userId": "2348038760492@c.us",
+    "direction": "out",
+    "message": "Sure thing! If you need help or just want to chat about something funny or interesting happening today, I'm here for it all day and night—just say the word. Let me know how else I can make your life easier! 😊 How has your day been so far?"
+  },
+  {
+    "timestamp": "2025-10-19T13:59:22.419Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *iPhone 14* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T13:59:27.791Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ Added *AirPods* to your cart.\n🛒 You can say “show my cart” to view it."
+  },
+  {
+    "timestamp": "2025-10-19T13:59:38.018Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "🛍️ Your Cart:\n1. *iPhone 14* — ₦950,000.00\n2. *AirPods* — ₦220,000.00\n\n💰 *Total:* ₦1,170,000.00\n\nSay “clear cart” to empty it."
+  },
+  {
+    "timestamp": "2025-10-19T13:59:45.183Z",
+    "userId": "2348114587431@c.us",
+    "direction": "event",
+    "message": "CHECKOUT ORD-266572"
+  },
+  {
+    "timestamp": "2025-10-19T13:59:45.238Z",
+    "userId": "2348114587431@c.us",
+    "direction": "out",
+    "message": "✅ *Checkout Complete!*\n\n🧾 *Order ID:* ORD-266572\n📅 *Date:* 10/19/2025, 2:59:45 PM\n\n1. *iPhone 14* — ₦950,000\n2. *AirPods* — ₦220,000\n\n💰 *Total:* ₦1,170,000\n\nThank you for shopping with us! 🛍️"
+  }
+]
