@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowLeft } from "lucide-react"; // optional icon lib (install via npm if needed)
+import { ArrowLeft, Send, Paperclip, Smile } from "lucide-react";
 
 export default function ChatWindow({ contact, onBack }) {
   const [messages, setMessages] = useState([
@@ -20,23 +20,23 @@ export default function ChatWindow({ contact, onBack }) {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full bg-gray-50">
-      {/* Header */}
-      <div className="flex items-center gap-3 p-4 border-b border-gray-200 bg-white shadow-sm">
-        {/* Back button for mobile */}
+    // ✅ Full-height chat container
+    <div className="flex flex-col h-screen sm:h-full bg-[#ECE5DD]">
+      {/* ✅ Header always visible */}
+      <div className="flex items-center gap-3 p-4 bg-[#075E54] text-white shadow-md z-10">
         <button
           onClick={onBack}
-          className="sm:hidden text-gray-600 hover:text-gray-800"
+          className="sm:hidden text-white hover:text-gray-200"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={22} />
         </button>
-        <h3 className="font-semibold text-gray-800 text-lg truncate">
+        <h3 className="font-semibold text-lg truncate">
           {contact?.name || "Select a contact"}
         </h3>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 p-4 overflow-y-auto space-y-3">
+      {/* ✅ Scrollable messages area */}
+      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
         {messages.map((msg, i) => (
           <div
             key={i}
@@ -45,10 +45,10 @@ export default function ChatWindow({ contact, onBack }) {
             }`}
           >
             <div
-              className={`px-4 py-2 rounded-2xl max-w-[75%] text-sm shadow-sm ${
+              className={`px-4 py-2 rounded-2xl max-w-[75%] text-sm shadow ${
                 msg.from === "me"
-                  ? "bg-blue-500 text-white rounded-br-none"
-                  : "bg-white border border-gray-200 text-gray-800 rounded-bl-none"
+                  ? "bg-[#DCF8C6] text-gray-800 rounded-br-none"
+                  : "bg-white text-gray-800 rounded-bl-none"
               }`}
             >
               {msg.text}
@@ -58,20 +58,29 @@ export default function ChatWindow({ contact, onBack }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input */}
-      <div className="p-3 border-t border-gray-200 bg-white flex gap-2 items-center">
+      {/* ✅ Input bar fixed at bottom */}
+      <div className="p-3 border-t border-gray-300 bg-white flex items-center gap-3">
+        <button className="text-gray-500 hover:text-gray-700">
+          <Smile size={22} />
+        </button>
+
+        <button className="text-gray-500 hover:text-gray-700">
+          <Paperclip size={20} />
+        </button>
+
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
           placeholder="Type a message..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-[#25D366]"
         />
+
         <button
           onClick={sendMessage}
-          className="px-5 py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 active:scale-95 transition"
+          className="p-2 bg-[#25D366] text-white rounded-full hover:bg-[#1DA955] transition"
         >
-          Send
+          <Send size={20} />
         </button>
       </div>
     </div>

@@ -6,7 +6,7 @@ import ChatWindow from "./components/ChatWindow.jsx";
 export default function App() {
   const [selectedContact, setSelectedContact] = useState(null);
 
-  // Temporary mock contacts
+  // simple mock contacts
   const contacts = [
     { id: 1, name: "Jane’s Fashion Store", lastMessage: "New order today?" },
     { id: 2, name: "Divine Bakery", lastMessage: "Cake order confirmed." },

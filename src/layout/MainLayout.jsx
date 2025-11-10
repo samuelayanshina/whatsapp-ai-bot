@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import ContactsSidebar from "../components/ContactsSidebar.jsx";
 import ChatWindow from "../components/ChatWindow.jsx";
 
-export default function MainLayout({ contacts }) {
+export default function MainLayout({ contacts = [] }) {
   const [selectedContact, setSelectedContact] = useState(null);
 
   return (
-    <div className="h-screen flex bg-gray-100 overflow-hidden">
-      {/* Sidebar - hidden when chat is open on mobile */}
+    <div className="h-screen flex flex-col sm:flex-row bg-[#ECE5DD] overflow-hidden">
+      {/* Sidebar */}
       <div
-        className={`flex-shrink-0 w-full sm:w-1/4 bg-white border-r border-gray-200 ${
-          selectedContact ? "hidden sm:flex" : "flex"
-        } flex-col`}
+        className={`flex-shrink-0 w-full sm:w-1/4 bg-white border-r border-gray-300 transition-transform duration-300 sm:transform-none ${
+          selectedContact ? "-translate-x-full sm:translate-x-0" : "translate-x-0"
+        }`}
       >
         <ContactsSidebar
           contacts={contacts}
@@ -20,10 +20,10 @@ export default function MainLayout({ contacts }) {
         />
       </div>
 
-      {/* Chat window - hidden on mobile until contact selected */}
+      {/* Chat Window */}
       <div
-        className={`flex-1 flex-col ${
-          selectedContact ? "flex" : "hidden sm:flex"
+        className={`flex-1 flex flex-col transition-transform duration-300 sm:transform-none ${
+          selectedContact ? "translate-x-0" : "translate-x-full sm:translate-x-0"
         }`}
       >
         {selectedContact ? (
@@ -33,7 +33,7 @@ export default function MainLayout({ contacts }) {
           />
         ) : (
           <div className="flex items-center justify-center h-full text-gray-500">
-            Select a contact to start chatting
+            Select a chat to view conversation
           </div>
         )}
       </div>
