@@ -1,21 +1,3 @@
-<<<<<<< HEAD
-import MainLayout from "./layout/MainLayout";
-import ContactsSidebar from "./components/ContactsSidebar";
-import ChatWindow from "./components/ChatWindow";
-
-function App() {
-  return (
-    <MainLayout>
-      <h1 className="text-red-500 text-5xl">TAILWIND IS WORKING</h1>
-
-      <ContactsSidebar />
-      <ChatWindow />
-    </MainLayout>
-  );
-}
-
-export default App;
-=======
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./layout/MainLayout.jsx";
@@ -60,4 +42,3 @@ export default function App() {
     </Router>
   );
 }
->>>>>>> restore-ui-fix
