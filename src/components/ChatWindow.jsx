@@ -1,10 +1,15 @@
+// src/components/ChatWindow.jsx
 import React, { useState, useRef, useEffect } from "react";
-import { ArrowLeft, Send, Paperclip, Smile } from "lucide-react";
+import { Send, Paperclip, Smile } from "lucide-react";
 
 export default function ChatWindow({ contact, onBack }) {
   const [messages, setMessages] = useState([
-    { from: "user", text: "Hello! How can I help you today?" },
+    { from: "user", text: "Hey there! 👋 Do you still have the red sneakers in stock?" },
+    { from: "me", text: "Yes, we do! Size 42 is available." },
+    { from: "user", text: "Perfect, I’ll take one pair please." },
+    { from: "me", text: "Great! I’ll send you the invoice now ✅" },
   ]);
+
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
 
@@ -20,29 +25,14 @@ export default function ChatWindow({ contact, onBack }) {
   }, [messages]);
 
   return (
-    // ✅ Full-height chat container
-    <div className="flex flex-col h-screen sm:h-full bg-[#ECE5DD]">
-      {/* ✅ Header always visible */}
-      <div className="flex items-center gap-3 p-4 bg-[#075E54] text-white shadow-md z-10">
-        <button
-          onClick={onBack}
-          className="sm:hidden text-white hover:text-gray-200"
-        >
-          <ArrowLeft size={22} />
-        </button>
-        <h3 className="font-semibold text-lg truncate">
-          {contact?.name || "Select a contact"}
-        </h3>
-      </div>
-
-      {/* ✅ Scrollable messages area */}
-      <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+    // fill available area; TopNav is above via fixed positioning
+    <div className="flex flex-col h-full bg-[#ECE5DD]">
+      {/* Messages: top padding provided by MainLayout's pt-[64px] + nav fixed; we can add a small safe margin */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3">
         {messages.map((msg, i) => (
           <div
             key={i}
-            className={`flex ${
-              msg.from === "me" ? "justify-end" : "justify-start"
-            }`}
+            className={`flex ${msg.from === "me" ? "justify-end" : "justify-start"}`}
           >
             <div
               className={`px-4 py-2 rounded-2xl max-w-[75%] text-sm shadow ${
@@ -58,7 +48,7 @@ export default function ChatWindow({ contact, onBack }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ✅ Input bar fixed at bottom */}
+      {/* Input bar (sticky to bottom of the chat area) */}
       <div className="p-3 border-t border-gray-300 bg-white flex items-center gap-3">
         <button className="text-gray-500 hover:text-gray-700">
           <Smile size={22} />
