@@ -8,17 +8,21 @@ export default function MainLayout({ contacts = [] }) {
 
   return (
     <>
-      {/* ✅ TopNav lives completely outside transforms — always visible */}
+      {/* ✅ TopNav — fixed forever, never moves */}
       <TopNav
         showBack={!!selectedContact}
         onBack={() => setSelectedContact(null)}
         title={selectedContact ? selectedContact.name : "Vendor Dashboard"}
       />
 
-      {/* ✅ Main app body sits below the fixed nav */}
-      <div className="relative h-screen flex flex-col bg-gray-100 overflow-hidden pt-[56px] sm:pt-[64px]">
-        <div className="flex flex-col sm:flex-row flex-1 z-0">
-          {/* Sidebar (no longer affects z-index) */}
+      {/* ✅ Main layout container (below TopNav) */}
+      <div
+        className="relative flex flex-col bg-gray-100 overflow-hidden pt-[56px] sm:pt-[64px]"
+        style={{ height: "100dvh" }}
+      >
+        <div className="flex flex-col sm:flex-row flex-1">
+          
+          {/* Sidebar */}
           <div
             className={`flex-shrink-0 w-full sm:w-1/4 bg-white border-r border-gray-200 
               transform-gpu transition-transform duration-300 ${
@@ -26,7 +30,6 @@ export default function MainLayout({ contacts = [] }) {
                   ? "translate-x-[-100%] sm:translate-x-0"
                   : "translate-x-0"
               }`}
-            style={{ zIndex: 0 }}
           >
             <ContactsSidebar
               contacts={contacts}
@@ -42,7 +45,6 @@ export default function MainLayout({ contacts = [] }) {
                 ? "translate-x-0"
                 : "translate-x-full sm:translate-x-0"
             }`}
-            style={{ zIndex: 0 }}
           >
             {selectedContact ? (
               <ChatWindow
@@ -57,6 +59,7 @@ export default function MainLayout({ contacts = [] }) {
               </div>
             )}
           </div>
+
         </div>
       </div>
     </>

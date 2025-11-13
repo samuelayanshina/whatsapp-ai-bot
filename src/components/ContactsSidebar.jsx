@@ -6,7 +6,6 @@ export default function ContactsSidebar({
   selectedContact,
   onSelectContact,
 }) {
-  // 💬 Demo placeholders until real data arrives
   const placeholderChats = [
     { id: 1, name: "Jane’s Fashion Store", lastMessage: "New order today?" },
     { id: 2, name: "Divine Bakery", lastMessage: "Cake order confirmed 🍰" },
@@ -14,30 +13,31 @@ export default function ContactsSidebar({
     { id: 4, name: "Coach Daniels", lastMessage: "Ready for our 1:1 call?" },
   ];
 
-  // If no real contacts, show placeholders
   const displayContacts = contacts.length > 0 ? contacts : placeholderChats;
 
   return (
     <div className="w-full sm:w-1/4 border-r border-gray-200 bg-white flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <h2 className="text-xl font-semibold text-gray-800">Chats</h2>
-        <button className="p-1 rounded-full hover:bg-gray-100">
-          <MoreVertical size={20} className="text-gray-600" />
-        </button>
+      {/* ✅ Fixed header inside the sidebar */}
+      <div className="sticky top-0 z-10 bg-white">
+        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <h2 className="text-xl font-semibold text-gray-800">Chats</h2>
+          <button className="p-1 rounded-full hover:bg-gray-100">
+            <MoreVertical size={20} className="text-gray-600" />
+          </button>
+        </div>
+
+        {/* Search bar */}
+        <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 bg-gray-50">
+          <Search size={18} className="text-gray-400" />
+          <input
+            type="text"
+            placeholder="Search or start new chat"
+            className="flex-1 bg-transparent outline-none text-sm text-gray-700"
+          />
+        </div>
       </div>
 
-      {/* Search bar */}
-      <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 bg-gray-50">
-        <Search size={18} className="text-gray-400" />
-        <input
-          type="text"
-          placeholder="Search or start new chat"
-          className="flex-1 bg-transparent outline-none text-sm text-gray-700"
-        />
-      </div>
-
-      {/* Contact list */}
+      {/* ✅ Scrollable chat list (header stays put) */}
       <div className="overflow-y-auto flex-1">
         {displayContacts.length > 0 ? (
           displayContacts.map((contact) => (
