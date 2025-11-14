@@ -17,9 +17,10 @@ export default function MainLayout({ contacts = [] }) {
 
       {/* ✅ Main layout container (below TopNav) */}
       <div
-        className="relative flex flex-col bg-gray-100 overflow-hidden pt-[56px] sm:pt-[64px]"
-        style={{ height: "100dvh" }}
-      >
+  className="relative flex flex-col bg-gray-100 overflow-hidden"
+  style={{ height: "100dvh" }}
+>
+
         <div className="flex flex-col sm:flex-row flex-1">
           
           {/* Sidebar */}
