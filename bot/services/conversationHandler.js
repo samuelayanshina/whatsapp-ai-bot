@@ -4,8 +4,7 @@ import path from "path";
 import { askOllama } from "./ollamaService.js";
 import { getUserMemory, setUserMemory } from "./memoryService.js";
 
-import { extractStatusInfo } from "./statusService.js";
-import { matchProductFromStatus } from "./statusProductMatcher.js";
+import { extractStatusInfo, matchProductFromStatus } from "./statusService.js";
 
 const BUS_FILE = path.resolve("./data/businessProfiles.json");
 
@@ -20,23 +19,23 @@ function loadBusiness(id) {
   }
 }
 
-// ----------------------------
+// ------------------------------------------------------------
 // INTENT DETECTOR
-// ----------------------------
+// ------------------------------------------------------------
 function detectIntent(text) {
   const t = text.toLowerCase();
   if (/^(hi|hello|hey|\bhowdy\b|\bhiya\b)/i.test(t)) return "greeting";
   if (/(\bprice\b|\bhow much\b|\bhow much is\b|\bprice of\b|\bcost\b)/i.test(t)) return "price";
   if (/(\bdeliver|delivery|ship)/i.test(t)) return "delivery";
   if (/(\bpay|payment|transfer|paystack|card)/i.test(t)) return "payment";
-  if (/^order\b|i want to buy|buy this|i'll take|i want (one|two|3|three)/i.test(t)) return "order";
+  if (/^order\b|i want to buy|buy this|i'll take|i want (one|two|three|3)/i.test(t)) return "order";
   if (/catalog|menu|list|items/i.test(t)) return "catalog";
   return "open";
 }
 
-// ----------------------------
+// ------------------------------------------------------------
 // TONE TEMPLATES
-// ----------------------------
+// ------------------------------------------------------------
 const TEMPLATES = {
   friendly: {
     greeting: ["Hey 👋 Which phone you dey find?", "Hi dear 👋 what phone you want?"],
@@ -68,14 +67,14 @@ const TEMPLATES = {
 };
 
 function pick(tone, intent) {
-  const set = TEMPLATES[tone] || TEMPLATES["neutral"];
-  const arr = set[intent] || set["fallback"];
+  const set = TEMPLATES[tone] || TEMPLATES.neutral;
+  const arr = set[intent] || set.fallback;
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// ----------------------------
+// ------------------------------------------------------------
 // MAIN HANDLER
-// ----------------------------
+// ------------------------------------------------------------
 export async function handleConversation(businessId, from, textOrMsg) {
   const business = loadBusiness(businessId) || {};
   const defaultTone = business.defaultTone || "neutral";
@@ -83,42 +82,53 @@ export async function handleConversation(businessId, from, textOrMsg) {
   const userMem = getUserMemory(from) || {};
   let tone = userMem.tone || defaultTone;
 
-  let text = ""; // we will define this SAFELY below
+  let text = ""; // safe final message text
 
-  // --------------------------------------------------
-  // 1. STATUS DETECTION – SUPER SAFE INJECTION
-  // --------------------------------------------------
+  // ------------------------------------------------------------
+  // 1. STATUS DETECTION — SUPER SAFE
+  // ------------------------------------------------------------
   if (typeof textOrMsg === "object" && textOrMsg?.message) {
     const msg = textOrMsg;
 
-    const statusInfo = extractStatusInfo(msg);
-    if (statusInfo) {
-      const product = matchProductFromStatus(statusInfo);
+    try {
+      const statusInfo = extractStatusInfo(msg);
 
-      if (product) {
-        return `🔎 You replied to a post about *${product.name}*\nPrice: ₦${product.price}\nStock: ${product.stock}\n\nWould you like to order it?`;
+      if (statusInfo) {
+        const product = await matchProductFromStatus(businessId, statusInfo);
+
+        if (product) {
+          const name = product.name || product.title || "product";
+          const price = product.price ?? product.amount ?? "–";
+          const stock =
+            product.stock ??
+            product.inventory ??
+            (product.inStock ? "Yes" : "Unknown");
+
+          return `🔎 You replied to a post about *${name}*\nPrice: ₦${price}\nStock: ${stock}\n\nWould you like to order it?`;
+        }
+
+        return `I saw you replied to a status but couldn't identify the product.\nPlease tell me the product name so I can assist you.`;
       }
-
-      return `I saw you replied to a status but couldn't identify the product.\nPlease tell me the product name so I can assist you.`;
+    } catch (err) {
+      console.error("Status handling error:", err);
     }
 
-    // Not a status → extract normal text
+    // Not a status → extract user text
     text =
       msg.message.conversation ||
       msg.message?.extendedTextMessage?.text ||
       "";
   } else {
-    // plain text
     text = textOrMsg || "";
   }
 
-  // --------------------------------------------------
-  // 2. YOUR EXISTING LOGIC CONTINUES UNTOUCHED
-  // --------------------------------------------------
+  // ------------------------------------------------------------
+  // 2. EXISTING CHAT LOGIC — UNTOUCHED
+  // ------------------------------------------------------------
 
   const intent = detectIntent(text);
 
-  // BRAND PREFERENCE
+  // Brand preference learning
   if (/samsung|sammy/i.test(text)) setUserMemory(from, { favoriteBrand: "Samsung" });
   if (/iphone|apple/i.test(text)) setUserMemory(from, { favoriteBrand: "iPhone" });
   if (/tecno/i.test(text)) setUserMemory(from, { favoriteBrand: "Tecno" });
@@ -127,7 +137,7 @@ export async function handleConversation(businessId, from, textOrMsg) {
     console.log(`User ${from} prefers ${userMem.favoriteBrand}`);
   }
 
-  // TONE SWITCHING
+  // Tone switching
   if (/pidgin|naija|slang|dear|boss|bro/i.test(text)) {
     tone = "friendly";
     setUserMemory(from, { tone });
@@ -136,7 +146,7 @@ export async function handleConversation(businessId, from, textOrMsg) {
     setUserMemory(from, { tone });
   }
 
-  // RULE-BASED INTENTS
+  // RULE-BASED RESPONSES
   if (intent === "catalog") {
     const favorite = userMem.favoriteBrand;
 
@@ -149,15 +159,15 @@ export async function handleConversation(businessId, from, textOrMsg) {
       .join("\n");
 
     if (cat) return `Catalog:\n${cat}`;
+
     return pick(tone, "catalog");
   }
 
   if (intent === "price") {
     const catalog = business.catalog || [];
-    const found = catalog.find(
-      it =>
-        text.toLowerCase().includes(it.id.toLowerCase()) ||
-        text.toLowerCase().includes((it.name || "").toLowerCase())
+    const found = catalog.find(it =>
+      text.toLowerCase().includes(it.id.toLowerCase()) ||
+      text.toLowerCase().includes((it.name || "").toLowerCase())
     );
 
     if (found) return `${found.name} — ${found.price}`;
@@ -169,7 +179,7 @@ export async function handleConversation(businessId, from, textOrMsg) {
   if (intent === "order") return pick(tone, "order");
   if (intent === "greeting") return pick(tone, "greeting");
 
-  // AI FALLBACK
+  // AI fallback
   try {
     const prompt = `You are a Lagos phone-shop assistant. Reply in 1 short sentence (max 2 lines). Use ${tone} tone. Do NOT say you're an AI. Customer: "${text}"`;
 
