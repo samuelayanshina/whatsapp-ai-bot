@@ -4,59 +4,50 @@ const { Client, LocalAuth } = pkg;
 import qrcode from "qrcode-terminal";
 import { execSync } from "child_process";
 
+import { extractStatusInfo } from "./statusService.js";
+import { matchProductFromStatus } from "./statusService.js";
+import { handleConversation } from "./conversationHandler.js";
+
 let client;
 
 // Helper to find Chrome on macOS / Linux / Windows fallback
 function getChromePath() {
   try {
-    // macOS path
     const mac = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-    // Linux common path
     const linux = "/usr/bin/google-chrome";
-    // Windows (example)
     const win = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
-    // try mac
-    try {
-      execSync(`test -f "${mac}"`);
-      return mac;
-    } catch {}
-    // try linux
-    try {
-      execSync(`test -f "${linux}"`);
-      return linux;
-    } catch {}
-    // fallback: windows (won't be checked via execSync easily on mac)
+    try { execSync(`test -f "${mac}"`); return mac; } catch {}
+    try { execSync(`test -f "${linux}"`); return linux; } catch {}
     return null;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
 
 const chromePath = getChromePath();
-console.log("🧭 Using system Chrome:", chromePath || "no system Chrome detected (will fallback)");
+console.log("🧭 Using system Chrome:", chromePath || "no system Chrome detected (fallback mode)");
 
 export const startWhatsAppClient = async () => {
   console.log("🟡 Starting WhatsApp Web client...");
 
   client = new Client({
-  authStrategy: new LocalAuth({ dataPath: "./whatsapp-session" }),
-  puppeteer: {
-    headless: false,
-    executablePath: chromePath,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    protocolTimeout: 120000,
-  },
-});
-
+    authStrategy: new LocalAuth({ dataPath: "./whatsapp-session" }),
+    puppeteer: {
+      headless: false,
+      executablePath: chromePath,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      protocolTimeout: 120000,
+    },
+  });
 
   client.on("qr", (qr) => {
-    console.log("📱 Scan this QR code (Linked Devices → Link a Device):");
+    console.log("📱 Scan this QR code:");
     qrcode.generate(qr, { small: true });
   });
 
   client.on("authenticated", () => {
-    console.log("🔐 Authenticated — session stored.");
+    console.log("🔐 Authenticated — session saved.");
   });
 
   client.on("auth_failure", (msg) => {
@@ -68,26 +59,44 @@ export const startWhatsAppClient = async () => {
   });
 
   client.on("disconnected", (reason) => {
-    console.warn("⚠️ Client disconnected:", reason);
+    console.warn("⚠️ WhatsApp disconnected:", reason);
   });
 
+  // ------------------------------------------------------------
+  // ⭐ MAIN MESSAGE HANDLER — NOW WITH STATUS INTELLIGENCE
+  // ------------------------------------------------------------
   client.on("message", async (msg) => {
     try {
-      console.log(`💬 Message from ${msg.from}: ${msg.body}`);
-      const text = (msg.body || "").toLowerCase().trim();
-      if (text === "hi" || text === "hello") {
-        await msg.reply("👋 Hey! I'm your WhatsApp AI bot. How can I help?");
-      } else if (text.includes("order")) {
-        await msg.reply("🛍️ Send order details and I'll process.");
-      } else if (text.includes("price")) {
-        await msg.reply("💰 Pricing starts at $10 per item.");
-      } else if (text === "help") {
-        await msg.reply("🧠 Try: order, price, hi");
-      } else {
-        await msg.reply("🤖 I didn't understand. Try *help*.");
+      console.log(`💬 Message from ${msg.from}`);
+
+      // FIRST: Status detection
+      const statusInfo = extractStatusInfo(msg);
+
+      if (statusInfo) {
+        console.log("📌 User replied to a STATUS:", statusInfo);
+
+        const product = await matchProductFromStatus("defaultShop", statusInfo);
+
+        if (product) {
+          await msg.reply(
+            `🔎 You replied to a status about *${product.name}*\nPrice: ₦${product.price}\nStock: ${product.stock}\n\nWould you like to order it?`
+          );
+          return;
+        }
+
+        await msg.reply(
+          "👀 I saw you replied to a status, but I couldn’t identify the product.\nPlease tell me the product name."
+        );
+        return;
       }
+
+      // SECOND: Normal conversation flow
+      const response = await handleConversation("defaultShop", msg.from, msg);
+
+      await msg.reply(response);
+
     } catch (err) {
-      console.error("❌ Error handling message:", err);
+      console.error("❌ Message error:", err);
     }
   });
 
@@ -95,7 +104,7 @@ export const startWhatsAppClient = async () => {
     await client.initialize();
     console.log("🚀 WhatsApp client initialized.");
   } catch (err) {
-    console.error("❌ Error initializing WhatsApp client:", err);
+    console.error("❌ Initialization error:", err);
   }
 
   return client;
