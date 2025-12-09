@@ -22,17 +22,13 @@ async function startBot() {
   sock.ev.on("messages.upsert", async m => {
     try {
       const msg = m.messages[0];
-      if (!msg || !msg.message || msg.key.fromMe) return;
+if (!msg || !msg.message || msg.key.fromMe) return;
 
-      const from = msg.key.remoteJid;
-      const text =
-        msg.message.conversation ||
-        msg.message?.extendedTextMessage?.text ||
-        "";
+const from = msg.key.remoteJid;
+console.log("📩 Raw inbound msg from", from);
 
-      console.log("📩 Message from", from, "=>", text);
+const reply = await handleConversation("demo-shop", from, msg);
 
-      const reply = await handleConversation("demo-shop", from, text);
 
       // ✅ Typing animation
       await sock.presenceSubscribe(from);

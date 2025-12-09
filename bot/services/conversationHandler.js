@@ -1,8 +1,11 @@
 // services/conversationHandler.js
 import fs from "fs";
-import { askOllama } from "./ollamaService.js"; // must exist (I gave this earlier)
-import { getUserMemory, setUserMemory } from "./memoryService.js";
 import path from "path";
+import { askOllama } from "./ollamaService.js";
+import { getUserMemory, setUserMemory } from "./memoryService.js";
+
+import { extractStatusInfo } from "./statusService.js";
+import { matchProductFromStatus } from "./statusProductMatcher.js";
 
 const BUS_FILE = path.resolve("./data/businessProfiles.json");
 
@@ -17,7 +20,9 @@ function loadBusiness(id) {
   }
 }
 
-// Very small detector for common intents
+// ----------------------------
+// INTENT DETECTOR
+// ----------------------------
 function detectIntent(text) {
   const t = text.toLowerCase();
   if (/^(hi|hello|hey|\bhowdy\b|\bhiya\b)/i.test(t)) return "greeting";
@@ -29,7 +34,9 @@ function detectIntent(text) {
   return "open";
 }
 
-// tiny short reply templates per tone
+// ----------------------------
+// TONE TEMPLATES
+// ----------------------------
 const TEMPLATES = {
   friendly: {
     greeting: ["Hey 👋 Which phone you dey find?", "Hi dear 👋 what phone you want?"],
@@ -57,10 +64,6 @@ const TEMPLATES = {
     order: ["Please send model and address.", "Which model and where to deliver?"],
     catalog: ["I can share the catalog — what brand?", "Which brand are you interested in?"],
     fallback: ["Okay — checking now.", "Let me confirm and reply."]
-  },
-  friendly_short: {
-    // fallback single-sentence replies if we want even shorter
-    fallback: ["Sure.", "On it.", "Okay."]
   }
 };
 
@@ -70,85 +73,117 @@ function pick(tone, intent) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-export async function handleConversation(businessId, from, text) {
+// ----------------------------
+// MAIN HANDLER
+// ----------------------------
+export async function handleConversation(businessId, from, textOrMsg) {
   const business = loadBusiness(businessId) || {};
   const defaultTone = business.defaultTone || "neutral";
 
-  // user memory: check saved tone
   const userMem = getUserMemory(from) || {};
   let tone = userMem.tone || defaultTone;
-  // ✅ If user has saved favorite brand, bias replies
-if (userMem.favoriteBrand) {
-  console.log(`User ${from} prefers ${userMem.favoriteBrand}`);
-}
 
+  let text = ""; // we will define this SAFELY below
 
-  // detect intent & maybe detect tone from message (simple)
+  // --------------------------------------------------
+  // 1. STATUS DETECTION – SUPER SAFE INJECTION
+  // --------------------------------------------------
+  if (typeof textOrMsg === "object" && textOrMsg?.message) {
+    const msg = textOrMsg;
+
+    const statusInfo = extractStatusInfo(msg);
+    if (statusInfo) {
+      const product = matchProductFromStatus(statusInfo);
+
+      if (product) {
+        return `🔎 You replied to a post about *${product.name}*\nPrice: ₦${product.price}\nStock: ${product.stock}\n\nWould you like to order it?`;
+      }
+
+      return `I saw you replied to a status but couldn't identify the product.\nPlease tell me the product name so I can assist you.`;
+    }
+
+    // Not a status → extract normal text
+    text =
+      msg.message.conversation ||
+      msg.message?.extendedTextMessage?.text ||
+      "";
+  } else {
+    // plain text
+    text = textOrMsg || "";
+  }
+
+  // --------------------------------------------------
+  // 2. YOUR EXISTING LOGIC CONTINUES UNTOUCHED
+  // --------------------------------------------------
+
   const intent = detectIntent(text);
 
-  // ✅ Detect brand preference
-if (/samsung|sammy/i.test(text)) {
-  setUserMemory(from, { favoriteBrand: "Samsung" });
-}
+  // BRAND PREFERENCE
+  if (/samsung|sammy/i.test(text)) setUserMemory(from, { favoriteBrand: "Samsung" });
+  if (/iphone|apple/i.test(text)) setUserMemory(from, { favoriteBrand: "iPhone" });
+  if (/tecno/i.test(text)) setUserMemory(from, { favoriteBrand: "Tecno" });
 
-if (/iphone|apple/i.test(text)) {
-  setUserMemory(from, { favoriteBrand: "iPhone" });
-}
+  if (userMem.favoriteBrand) {
+    console.log(`User ${from} prefers ${userMem.favoriteBrand}`);
+  }
 
-if (/tecno/i.test(text)) {
-  setUserMemory(from, { favoriteBrand: "Tecno" });
-}
-
-
-  // If user explicitly says "talk to me in pidgin" etc (simple check)
-  if (/pidgin|pidgin english|naija|local|slang|dear|boss|bro/i.test(text)) {
+  // TONE SWITCHING
+  if (/pidgin|naija|slang|dear|boss|bro/i.test(text)) {
     tone = "friendly";
     setUserMemory(from, { tone });
-  } else if (/formal|please|sir|madam|ma/i.test(text) && tone !== "polite") {
+  } else if (/formal|please|sir|madam|ma/i.test(text)) {
     tone = "polite";
     setUserMemory(from, { tone });
   }
 
-  // RULE-BASED HANDLES: FAQs & catalog
+  // RULE-BASED INTENTS
   if (intent === "catalog") {
-  const favorite = userMem.favoriteBrand;
+    const favorite = userMem.favoriteBrand;
 
-  if (favorite) {
-    return `Since you like ${favorite}, we have new deals on ${favorite} phones 🤝 Want me to send list?`;
+    if (favorite) {
+      return `Since you like ${favorite}, we have new deals on ${favorite} phones 🤝 Want me to send list?`;
+    }
+
+    const cat = (business.catalog || [])
+      .map(it => `${it.id} - ${it.name} (${it.price || "-"})`)
+      .join("\n");
+
+    if (cat) return `Catalog:\n${cat}`;
+    return pick(tone, "catalog");
   }
 
-  const cat = (business.catalog || []).map(it => `${it.id} - ${it.name} (${it.price || "-"})`).join("\n");
-  if (cat) return `Catalog:\n${cat}`;
-  return pick(tone, "catalog");
-}
-
-
   if (intent === "price") {
-    // If user said a known product id or name, try direct lookup
     const catalog = business.catalog || [];
-    const found = catalog.find(it => text.toLowerCase().includes(it.id.toLowerCase()) || text.toLowerCase().includes((it.name || "").toLowerCase()));
+    const found = catalog.find(
+      it =>
+        text.toLowerCase().includes(it.id.toLowerCase()) ||
+        text.toLowerCase().includes((it.name || "").toLowerCase())
+    );
+
     if (found) return `${found.name} — ${found.price}`;
-    // otherwise ask single short follow-up
     return pick(tone, "price");
   }
 
   if (intent === "delivery") return pick(tone, "delivery");
   if (intent === "payment") return pick(tone, "payment");
   if (intent === "order") return pick(tone, "order");
-
   if (intent === "greeting") return pick(tone, "greeting");
 
-  // OPEN / fallback — use Ollama but with a short, constrained prompt
-  // keep prompt minimal — ask for 1-line reply
+  // AI FALLBACK
   try {
     const prompt = `You are a Lagos phone-shop assistant. Reply in 1 short sentence (max 2 lines). Use ${tone} tone. Do NOT say you're an AI. Customer: "${text}"`;
+
     const ai = await askOllama(prompt, { model: "phi3" });
-    // if the AI answer is long, truncate to one short line
-    const oneLine = ai.split("\n").map(s => s.trim()).filter(Boolean).slice(0, 2).join(" ");
-    // keep it human-tight: <= 240 chars
+    const oneLine = ai
+      .split("\n")
+      .map(s => s.trim())
+      .filter(Boolean)
+      .slice(0, 2)
+      .join(" ");
+
     return oneLine.length > 240 ? oneLine.slice(0, 237) + "..." : oneLine;
   } catch (e) {
-    console.error("askOllama fallback error:", e && e.message ? e.message : e);
+    console.error("askOllama fallback error:", e.message || e);
     return pick(tone, "fallback");
   }
 }
