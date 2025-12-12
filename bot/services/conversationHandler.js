@@ -19,179 +19,178 @@ function loadBusiness(id) {
   }
 }
 
-// ----------------------------
-// Basic intent detection
-// ----------------------------
-function detectIntent(text) {
-  const t = String(text || "").toLowerCase();
-  if (/^(hi|hello|hey|\bhowdy\b|\bhiya\b)/i.test(t)) return "greeting";
-  if (/(\bprice\b|\bhow much\b|\bhow much is\b|\bprice of\b|\bcost\b)/i.test(t)) return "price";
-  if (/(\bdeliver|delivery|ship)/i.test(t)) return "delivery";
-  if (/(\bpay|payment|transfer|paystack|card)/i.test(t)) return "payment";
-  if (/^order\b|i want to buy|buy this|i'll take|i want (one|two|three|3)/i.test(t)) return "order";
+/* ----------------------------
+   INTENT DETECTION
+---------------------------- */
+function detectIntent(t) {
+  t = String(t || "").toLowerCase();
+
+  if (/^(hi|hello|hey|hiya)/i.test(t)) return "greeting";
+  if (/price|how much|cost|price of/i.test(t)) return "price";
+  if (/deliver|delivery|ship/i.test(t)) return "delivery";
+  if (/pay|payment|transfer|paystack|card/i.test(t)) return "payment";
+  if (/order|i want to buy|buy this|i'll take/i.test(t)) return "order";
   if (/catalog|menu|list|items/i.test(t)) return "catalog";
 
-  // cart-related
-  if (/\badd\b.*\bto cart\b|\badd\b.*cart|\bput.*cart\b|\badd.*to my cart\b/i.test(t)) return "cart:add";
-  if (/\bshow\b.*\bcart\b|\bmy cart\b|\bview cart\b/i.test(t)) return "cart:show";
-  if (/\bremove\b.*from cart\b|\bdelete\b.*cart\b|\bremove.*cart\b/i.test(t)) return "cart:remove";
-  if (/\bcheckout\b|\bpay now\b|\bplace order\b/i.test(t)) return "cart:checkout";
-  if (/\bclear cart\b|\bempty cart\b/i.test(t)) return "cart:clear";
+  // cart
+  if (/add.*cart|put.*cart/i.test(t)) return "cart:add";
+  if (/show.*cart|view cart|my cart/i.test(t)) return "cart:show";
+  if (/remove.*cart|delete.*cart/i.test(t)) return "cart:remove";
+  if (/checkout|pay now|place order/i.test(t)) return "cart:checkout";
+  if (/clear cart|empty cart/i.test(t)) return "cart:clear";
 
   return "open";
 }
 
-// ----------------------------
-// Tone detection (pidgin/friendly/polite/neutral)
-// ----------------------------
-function detectToneFromText(text) {
-  const t = String(text || "");
-  const hasEmoji = /[\p{Emoji}]/u.test(t);
-  const hasPidginWords = /\b(abi|wey|na|boss|omo|abeg|no wahala|waka|dey)\b/i.test(t);
-  const hasSlang = /\b(bro|bra|fam|bruh|lol|omg|abi|broski)\b/i.test(t);
-  const isFormal = /please|kindly|sir|madam|regards|thank you|thanks/i.test(t);
-  const manyExclam = (t.match(/!/g) || []).length >= 2;
-  const allCaps = /^[^a-z]*[A-Z0-9 !?.,'"`-]{2,}$/.test(t) && /[A-Z]/.test(t);
+/* ----------------------------
+   TONE DETECTOR
+---------------------------- */
+function detectToneFromText(t) {
+  t = String(t || "");
 
-  if (hasPidginWords || (hasSlang && /abeg|no wahala|omo/i.test(t))) return "friendly";
-  if (hasEmoji && (hasSlang || t.trim().length < 40)) return "friendly";
-  if (manyExclam || allCaps) return "friendly";
-  if (isFormal) return "polite";
+  const hasEmoji = /[\p{Emoji}]/u.test(t);
+  const pidgin = /\b(abi|wey|na|boss|omo|abeg|no wahala|dey)\b/i.test(t);
+  const slang = /\b(bro|bruh|fam|lol|omg)\b/i.test(t);
+  const formal = /please|kindly|sir|madam/i.test(t);
+  const caps = /^[A-Z0-9 !?.,'"`-]{4,}$/i.test(t);
+
+  if (pidgin || slang || hasEmoji || caps) return "friendly";
+  if (formal) return "polite";
+
   return "neutral";
 }
 
-// ----------------------------
-// Quick emoji extractor (mirror top emoji)
-// ----------------------------
+/* ----------------------------
+   EMOJI MIRROR
+---------------------------- */
 function extractTopEmoji(text) {
-  const emojiMatches = Array.from(String(text || "").matchAll(/([\p{Emoji}])/gu)).map(m => m[1]);
-  if (!emojiMatches.length) return "";
-  // return most frequent emoji
+  const found = Array.from(String(text || "").matchAll(/([\p{Emoji}])/gu)).map(m => m[1]);
+  if (!found.length) return "";
   const counts = {};
-  for (const e of emojiMatches) counts[e] = (counts[e] || 0) + 1;
+  for (const e of found) counts[e] = (counts[e] || 0) + 1;
   return Object.entries(counts).sort((a,b)=>b[1]-a[1])[0][0] || "";
 }
 
-// ----------------------------
-// Templates for quick replies (tone-aware)
-// ----------------------------
+/* ----------------------------
+   TEMPLATES
+---------------------------- */
 const TEMPLATES = {
   friendly: {
-    greeting: ["Hey boss 👋 Which phone you dey find?", "Omo! Wetin you want? 😄", "Hi — how can I help you today?"],
-    price: ["Which model you dey look for? I go check price now.", "Tell me the model and I go give you price quick."],
-    fallback: ["One sec, I go check 👀", "I dey on it — hold on small."]
+    greeting: [
+      "Hey boss 👋 Wetin you find?",
+      "Omo! How far? 😄",
+      "Hi boss — how I fit help you?"
+    ],
+    price: [
+      "Which phone model you wan check?",
+      "Tell me the model make I run am quick."
+    ],
+    fallback: ["One sec boss 👀", "Hold on make I check something…"]
   },
+
   polite: {
-    greeting: ["Hello. How may I assist you today?", "Good day — how can I help?"],
-    price: ["Please tell me the model so I can provide pricing.", "Kindly confirm the model name for the price."],
-    fallback: ["One moment, checking...", "I will check and get back."]
+    greeting: ["Hello. How may I assist you today?", "Good day — how can I help you?"],
+    price: ["Please tell me the phone model.", "Kindly confirm the item name for pricing."],
+    fallback: ["One moment…", "Let me confirm please."]
   },
+
   neutral: {
     greeting: ["Hello — how can I help?", "Hi — what do you need?"],
-    price: ["Which model would you like the price for?", "Tell me the model name."],
-    fallback: ["Okay — checking now.", "Let me confirm and reply."]
+    price: ["Which model?", "Tell me the model name."],
+    fallback: ["Okay, checking…", "Let me confirm."]
   }
 };
+
 function pickTemplate(tone, intent) {
   const set = TEMPLATES[tone] || TEMPLATES.neutral;
   const arr = set[intent] || set.fallback;
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// ----------------------------
-// Helper: produce a human-ish typing time (ms) based on message length
-// ----------------------------
+/* ----------------------------
+   TYPING ESTIMATOR
+---------------------------- */
 function estimateTypingMsFor(text) {
-  const len = Math.max(10, String(text || "").length);
-  // baseline typing speed about 15-25 chars/sec; compute to feel human
-  const ms = Math.min(7000, Math.round((len / 18) * 1000) + 500);
-  return ms;
+  const length = Math.max(10, String(text).length);
+  return Math.min(5500, Math.round((length / 20) * 1000) + 400);
 }
 
-// ----------------------------
-// Shopping / cart helpers (uses cartService)
-// ----------------------------
+/* ----------------------------
+   CART LOGIC
+---------------------------- */
 async function handleCartIntent(intent, from, text) {
-  const lower = String(text || "").toLowerCase();
+  const lower = text.toLowerCase();
 
   if (intent === "cart:add") {
-    // crude product extraction: try "add <product> to cart" or "add <product>"
-    const m = lower.match(/(?:add|put)\s+(?:the\s+)?(.+?)(?:\s+to\s+cart|\s*$)/i);
-    const itemName = m ? m[1].trim() : null;
-    if (!itemName) return { text: "Which item you wan add? Tell me name small.", success: false };
+    const m = lower.match(/add (.+?)(?: to cart|$)/i);
+    const item = m ? m[1].trim() : null;
+    if (!item) return { text: "Which item you wan add boss?", success: false };
 
-    const item = { name: itemName, qty: 1 };
-    cartService.addToCart(from, item);
-    return { text: `👌 ${itemName} don enter your cart. Want to checkout or continue shopping?`, success: true };
+    cartService.addToCart(from, { name: item, qty: 1 });
+    return { text: `👌 ${item} don enter your cart.`, success: true };
   }
 
   if (intent === "cart:show") {
-    const cart = cartService.getCart(from);
-    if (!cart || cart.length === 0) return { text: "Your cart empty boss — want to add something?", success: true };
-    const list = cart.map((it,i)=>`${i+1}. ${it.name} x${it.qty||1}`).join("\n");
-    return { text: `Your cart:\n${list}`, success: true };
+    const items = cartService.getCart(from);
+    if (!items.length) return { text: "Your cart empty boss 😅", success: true };
+    return {
+      text: "Your cart:\n" + items.map((x,i)=> `${i+1}. ${x.name} x${x.qty||1}`).join("\n"),
+      success: true
+    };
   }
 
   if (intent === "cart:remove") {
-    const m = lower.match(/(?:remove|delete)\s+(?:the\s+)?(.+?)(?:\s+from\s+cart|\s*$)/i);
-    const itemName = m ? m[1].trim() : null;
-    if (!itemName) return { text: "Which item you wan remove? tell me name.", success: false };
-    cartService.removeFromCart(from, itemName);
-    return { text: `Removed *${itemName}* from your cart (if it was there).`, success: true };
+    const m = lower.match(/remove (.+?)(?: from cart|$)/i);
+    const item = m ? m[1].trim() : null;
+    if (!item) return { text: "Which item you wan remove?", success: false };
+
+    cartService.removeFromCart(from, item);
+    return { text: `Removed *${item}* from cart.`, success: true };
   }
 
   if (intent === "cart:clear") {
     cartService.clearCart(from);
-    return { text: "Your cart clear now. Want anything else?", success: true };
+    return { text: "Cart cleared 👍", success: true };
   }
 
   if (intent === "cart:checkout") {
-    const cart = cartService.getCart(from);
-    if (!cart || cart.length === 0) return { text: "Your cart empty — nothing to checkout.", success: false };
-    // simple placeholder: in future integrate real payment
-    return { text: `Checkout started. We will contact you to complete payment for ${cart.length} item(s).`, success: true };
+    const items = cartService.getCart(from);
+    if (!items.length) return { text: "Cart empty — nothing to checkout 😅", success: false };
+    return { text: `Checkout started for ${items.length} item(s).`, success: true };
   }
 
-  return { text: "Cart error or unknown cart intent.", success: false };
+  return { text: "Cart error.", success: false };
 }
 
-// ----------------------------
-// MAIN: handleConversation
-// returns an object: { text, tone, interim: [], typingMs, rawIntent }
-// ----------------------------
+/* ----------------------------
+   MAIN HANDLER
+---------------------------- */
 export async function handleConversation(businessId, from, textOrMsg) {
-  const business = loadBusiness(businessId) || {};
-  const defaultTone = business.defaultTone || "neutral";
-
+  const business = loadBusiness(businessId);
   const userMem = getUserMemory(from) || {};
-  let tone = userMem.tone || defaultTone;
+  let tone = userMem.tone || business.defaultTone || "neutral";
 
   let text = "";
 
-  // 1) If incoming is a message object (from whatsapp library), preserve logic
+  // Status replies also stay the same
   if (typeof textOrMsg === "object" && textOrMsg?.message) {
     const msg = textOrMsg;
-    try {
-      const statusInfo = extractStatusInfo(msg);
-      if (statusInfo) {
-        const product = await matchProductFromStatus(businessId, statusInfo);
-        if (product) {
-          const name = product.name || product.title || "product";
-          const price = product.price ?? product.amount ?? "–";
-          const stock = product.stock ?? product.inventory ?? (product.inStock ? "Yes" : "Unknown");
-          const reply = `🔎 You replied to a post about *${name}*\nPrice: ₦${price}\nStock: ${stock}\n\nWould you like to order it?`;
-          const typingMs = estimateTypingMsFor(reply);
-          return { text: reply, tone, typingMs, interim: [], rawIntent: "status:reply" };
-        }
-        const reply = `I saw you replied to a status but couldn't identify the product. Please tell me the product name so I can assist you.`;
-        return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "status:reply:unknown" };
+
+    const statusInfo = extractStatusInfo(msg);
+    if (statusInfo) {
+      const product = await matchProductFromStatus(businessId, statusInfo);
+      if (product) {
+        const reply = `🔎 You replied to *${product.name}*\nPrice: ₦${product.price}\nStock: ${product.stock}\n\nWant to order it?`;
+        return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: ["Hold on boss…"], rawIntent: "status" };
       }
-    } catch (err) {
-      console.error("Status handling error:", err);
+      const reply = "👀 I see your status reply but I no recognise the product. Tell me the name.";
+      return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "status:unknown" };
     }
 
-    // Not a status: extract plain body/extended text
-    text = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.body || "";
+    text = msg.message?.conversation ||
+           msg.message?.extendedTextMessage?.text ||
+           msg.body ||
+           "";
   } else {
     text = String(textOrMsg || "");
   }
@@ -199,88 +198,83 @@ export async function handleConversation(businessId, from, textOrMsg) {
   text = text.trim();
   if (!text) {
     const fallback = pickTemplate(tone, "fallback");
-    return { text: fallback, tone, typingMs: estimateTypingMsFor(fallback), interim: [], rawIntent: "empty" };
+    return { text: fallback, tone, typingMs: estimateTypingMsFor(fallback) };
   }
 
-  // Tone auto-detection (and persist if not set)
+  // Auto tone detection
   const autoTone = detectToneFromText(text);
   if (!userMem.tone) {
-    tone = autoTone || tone;
+    tone = autoTone;
     setUserMemory(from, { tone });
   }
 
-  // Emoji mirror
   const topEmoji = extractTopEmoji(text);
-
-  // Intent detection
   const intent = detectIntent(text);
 
-  // CART flows
+  /* ----------------------
+     CART INTENTS
+  ----------------------- */
   if (intent.startsWith("cart:")) {
-    const cartResult = await handleCartIntent(intent, from, text);
-    // attach emoji if exists
-    const replyText = topEmoji ? `${cartResult.text} ${topEmoji}` : cartResult.text;
-    return { text: replyText, tone, typingMs: estimateTypingMsFor(replyText), interim: [], rawIntent: intent };
+    const cartReply = await handleCartIntent(intent, from, text);
+    const output = topEmoji ? `${cartReply.text} ${topEmoji}` : cartReply.text;
+    return { text: output, tone, typingMs: estimateTypingMsFor(output), interim: [], rawIntent: intent };
   }
 
-  // RULE-BASED: catalog / price / greeting / order / delivery / payment
-  if (intent === "catalog") {
-    // prefer remembered brand
-    const favorite = userMem.favoriteBrand;
-    let reply;
-    if (favorite) {
-      reply = `Since you like ${favorite}, we have new deals on ${favorite} phones 🤝 Want me to send list?`;
-    } else {
-      const cat = (business.catalog || []).map(it => `${it.id} - ${it.name} (${it.price || "-"})`).join("\n");
-      reply = cat ? `Catalog:\n${cat}` : pickTemplate(tone, "catalog");
-    }
-    if (topEmoji) reply += ` ${topEmoji}`;
-    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "catalog" };
+  /* ----------------------
+     RULE-BASED (fast)
+  ----------------------- */
+  if (intent === "greeting") {
+    const reply = pickTemplate(tone, "greeting") + (topEmoji ? ` ${topEmoji}` : "");
+    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [] };
   }
 
   if (intent === "price") {
+    const reply = pickTemplate(tone, "price") + (topEmoji ? ` ${topEmoji}` : "");
+    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [] };
+  }
+
+  if (intent === "catalog") {
     const catalog = business.catalog || [];
-    const found = catalog.find(it =>
-      text.toLowerCase().includes((it.id || "").toLowerCase()) ||
-      text.toLowerCase().includes(((it.name || "")).toLowerCase())
-    );
-    if (found) {
-      const reply = `${found.name} — ${found.price}${topEmoji ? " " + topEmoji : ""}`;
-      return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "price:found" };
-    }
-    const reply = pickTemplate(tone, "price") + (topEmoji ? " " + topEmoji : "");
-    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "price" };
+    const list = catalog.map(it => `${it.id} - ${it.name} (${it.price})`).join("\n");
+    const reply = list || pickTemplate(tone, "catalog");
+    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [] };
   }
 
-  if (intent === "greeting") {
-    const reply = pickTemplate(tone, "greeting") + (topEmoji ? " " + topEmoji : "");
-    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: "greeting" };
-  }
-
-  // Order/delivery/payment quick templates
-  if (intent === "order" || intent === "delivery" || intent === "payment") {
-    const reply = pickTemplate(tone, intent) + (topEmoji ? " " + topEmoji : "");
-    return { text: reply, tone, typingMs: estimateTypingMsFor(reply), interim: [], rawIntent: intent };
-  }
-
-  // FINAL: AI fallback — ask Ollama / OpenAI but instruct it to match tone & be short
+  /* ----------------------
+     AI FALLBACK (SAFE + SHORT)
+  ----------------------- */
   try {
-    const basePrompt = `
-You are a Lagos phone-shop assistant on WhatsApp. Mirror the customer's personality (pidgin, casual, polite, emojis) and keep replies short (1 sentence, max 2 lines). Use ${tone} tone. Do NOT say you're an AI. Customer: "${text}"
+    const prompt = `
+You are a Lagos phone-shop WhatsApp assistant.
+Reply in ONE short sentence only.
+Mirror customer's vibe (pidgin, casual, polite).
+Use ${tone} tone.
+Never list multiple options.
+Never give multiple sentences.
+Never write bullet points.
+Customer said: "${text}"
 `;
-    const ai = await askOllama(basePrompt, { model: "phi3" });
-    // tidy
-    const oneLine = String(ai || "").split("\n").map(s => s.trim()).filter(Boolean).slice(0,2).join(" ");
-    const safeReply = oneLine || pickTemplate(tone, "fallback");
-    const reply = topEmoji ? `${safeReply} ${topEmoji}` : safeReply;
 
-    // interim suggestions: small human-like "hold on" for longer thought
-    const typingMs = estimateTypingMsFor(reply);
-    const interim = typingMs > 2000 ? ["Hold on boss…", "Checking for you…"] : [];
-    return { text: reply.length > 240 ? reply.slice(0,237)+"..." : reply, tone, typingMs, interim, rawIntent: "ai_fallback" };
+    let ai = await askOllama(prompt, { model: "phi3" });
+
+    // Force single sentence
+    ai = ai.split(/[.\n]/)[0].trim();
+
+    // Limit length
+    if (ai.length > 160) ai = ai.slice(0, 157) + "...";
+
+    const final = topEmoji ? `${ai} ${topEmoji}` : ai;
+
+    return {
+      text: final,
+      tone,
+      typingMs: estimateTypingMsFor(final),
+      interim: ["Hold on boss…"],
+      rawIntent: "ai_fallback"
+    };
   } catch (err) {
-    console.error("askOllama fallback error:", err);
-    const fallback = pickTemplate(tone, "fallback") + (topEmoji ? " " + topEmoji : "");
-    return { text: fallback, tone, typingMs: estimateTypingMsFor(fallback), interim: [], rawIntent: "fallback_error" };
+    console.error("AI error:", err);
+    const fallback = pickTemplate(tone, "fallback");
+    return { text: fallback, tone, typingMs: estimateTypingMsFor(fallback), interim: [] };
   }
 }
