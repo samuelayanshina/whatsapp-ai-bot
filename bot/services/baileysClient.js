@@ -38,13 +38,24 @@ export async function startBaileysClient(onMessage) {
   });
 
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
-    if (type !== "notify") return;
+  if (type !== "notify") return;
 
-    const msg = messages[0];
-    if (!msg.message || msg.key.fromMe) return;
+  const msg = messages[0];
+  if (!msg?.message) return;
+  if (msg.key.fromMe) return;
 
-    await onMessage(msg, sock);
-  });
+  // ⛔ ignore non-user / system traffic
+  if (
+    msg.message.protocolMessage ||
+    msg.message.reactionMessage ||
+    msg.message.senderKeyDistributionMessage
+  ) {
+    return;
+  }
+
+  await onMessage(msg, sock);
+});
+
 
   return sock;
 }
