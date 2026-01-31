@@ -44,7 +44,7 @@ export async function startBaileysClient(onMessage) {
   if (!msg?.message) return;
   if (msg.key.fromMe) return;
 
-  // ⛔ ignore non-user / system traffic
+  // ⛔ ignore history & protocol noise
   if (
     msg.message.protocolMessage ||
     msg.message.reactionMessage ||
@@ -53,8 +53,14 @@ export async function startBaileysClient(onMessage) {
     return;
   }
 
+  // ⛔ ignore history sync messages
+  if (msg.key.id?.startsWith("BAE5")) {
+    return;
+  }
+
   await onMessage(msg, sock);
 });
+
 
 
   return sock;
