@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "nodemon bot/index.js",
-    "start": "node bot/index.js"
+    "dev": "nodemon server/server.js",
+    "start": "node server/server.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^7.0.0-rc.6",

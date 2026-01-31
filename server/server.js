@@ -13,6 +13,8 @@ import { handleConversation } from "../bot/services/conversationHandler.js";
 dotenv.config();
 // connectDB();
 
+console.log("🚀 server/server.js BOOTED");
+
 /* ============================
    WhatsApp (Baileys)
 ============================ */
