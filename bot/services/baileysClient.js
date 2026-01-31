@@ -20,22 +20,25 @@ export async function startBaileysClient(onMessage) {
   sock.ev.on("creds.update", saveCreds);
 
   sock.ev.on("connection.update", ({ connection, lastDisconnect }) => {
-    if (connection === "open") {
-      console.log("✅ Baileys connected");
+  if (connection === "open") {
+    console.log("✅ Baileys connected");
+  }
+
+  if (connection === "close") {
+    const statusCode = lastDisconnect?.error?.output?.statusCode;
+
+    console.log("❌ Connection closed with code:", statusCode);
+
+    if (statusCode === DisconnectReason.loggedOut) {
+      console.log("🚪 Logged out — delete baileys-auth and restart");
+      process.exit(1);
     }
 
-    if (connection === "close") {
-      const shouldReconnect =
-        lastDisconnect?.error?.output?.statusCode !== DisconnectReason.loggedOut;
+    // ⛔ DO NOTHING ELSE
+    // Baileys handles reconnection internally
+  }
+});
 
-      if (shouldReconnect) {
-        console.log("🔁 Reconnecting...");
-        startBaileysClient(onMessage);
-      } else {
-        console.log("❌ Logged out — delete baileys-auth and rescan");
-      }
-    }
-  });
 
   sock.ev.on("messages.upsert", async ({ messages, type }) => {
   if (type !== "notify") return;
