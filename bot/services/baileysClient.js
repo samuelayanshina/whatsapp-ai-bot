@@ -12,10 +12,20 @@ export async function startBaileysClient(onMessage) {
   const { version } = await fetchLatestBaileysVersion();
 
   sock = makeWASocket({
-    version,
-    auth: state,
-    logger: pino({ level: "silent" })
-  });
+  version,
+  auth: state,
+  logger: pino({ level: "silent" }),
+
+  // 🔑 FORCE NEW DEVICE REGISTRATION
+  generateHighQualityLinkPreview: false,
+  syncFullHistory: false,
+  markOnlineOnConnect: false,
+  keepAliveIntervalMs: 30_000,
+
+  browser: ["Mac OS", "Chrome", "114.0.0"]
+});
+
+
 
   sock.ev.on("creds.update", saveCreds);
 
