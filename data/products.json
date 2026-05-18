@@ -1,0 +1,330 @@
+{
+  "products": [
+   {
+  "id": "p1",
+  "name": "iPhone 14 Pro",
+  "brand": "Apple",
+  "category": "smartphone",
+  "price": 850000,
+  "promoPrice": 820000,
+  "colors": ["Black", "Purple"],
+"images": {
+  "Black": [
+    "data/images/iphone14pro/black-front.jpg",
+    "data/images/iphone14pro/black-back.jpg"
+  ],
+  "Purple": [
+    "data/images/iphone14pro/purple-front.jpg",
+    "data/images/iphone14pro/purple-back.jpg"
+  ]
+},
+  "stock": 12
+},
+
+{
+  "id": "iphone12-uk-used",
+  "name": "iPhone 12 (UK Used)",
+  "brand": "Apple",
+  "category": "smartphone",
+  "price": 420000,
+  "condition": "UK Used",
+
+  "batteryHealth": "88%",
+  "faceId": true,
+  "repaired": false,
+  "icloudLocked": false,
+  "network": "Factory Unlocked",
+  "notes": "Very clean, no issues",
+
+  "colors": ["Black", "White"],
+
+  "images": {
+    "Black": [
+      "data/images/iphone12uk/black-front.jpg",
+      "data/images/iphone12uk/black-back.jpg"
+    ],
+    "White": [
+      "data/images/iphone12uk/white-front.jpg",
+      "data/images/iphone12uk/white-back.jpg"
+    ]
+  },
+
+  "stock": 3
+},
+
+    {
+      "id": "p2",
+      "name": "iPhone 13",
+      "category": "smartphone",
+      "price": 610000,
+      "stock": 15,
+      "images": []
+    },
+    {
+      "id": "p3",
+      "name": "iPhone 11",
+      "category": "smartphone",
+      "price": 390000,
+      "stock": 20,
+      "images": []
+    },
+    {
+      "id": "p4",
+      "name": "Samsung Galaxy S23 Ultra",
+      "category": "smartphone",
+      "price": 720000,
+      "stock": 10,
+      "images": []
+    },
+    {
+      "id": "p5",
+      "name": "Samsung Galaxy A54",
+      "category": "smartphone",
+      "price": 270000,
+      "stock": 22,
+      "images": []
+    },
+    {
+      "id": "p6",
+      "name": "Tecno Camon 20",
+      "category": "smartphone",
+      "price": 210000,
+      "stock": 18,
+      "images": []
+    },
+    {
+      "id": "p7",
+      "name": "Infinix Hot 30",
+      "category": "smartphone",
+      "price": 165000,
+      "stock": 25,
+      "images": []
+    },
+    {
+      "id": "p8",
+      "name": "Xiaomi Redmi Note 12",
+      "category": "smartphone",
+      "price": 195000,
+      "stock": 17,
+      "images": []
+    },
+
+    {
+      "id": "p9",
+      "name": "iPad 9th Gen",
+      "category": "tablet",
+      "price": 420000,
+      "stock": 8,
+      "images": []
+    },
+    {
+      "id": "p10",
+      "name": "Samsung Galaxy Tab A8",
+      "category": "tablet",
+      "price": 285000,
+      "stock": 12,
+      "images": []
+    },
+
+    {
+      "id": "p11",
+      "name": "MacBook Air M1",
+      "category": "laptop",
+      "price": 750000,
+      "stock": 5,
+      "images": []
+    },
+    {
+      "id": "p12",
+      "name": "HP Pavilion 15",
+      "category": "laptop",
+      "price": 410000,
+      "stock": 9,
+      "images": []
+    },
+    {
+      "id": "p13",
+      "name": "Dell Inspiron 14",
+      "category": "laptop",
+      "price": 360000,
+      "stock": 11,
+      "images": []
+    },
+
+    {
+      "id": "p14",
+      "name": "Apple Watch Series 8",
+      "category": "smartwatch",
+      "price": 320000,
+      "stock": 14,
+      "images": []
+    },
+    {
+      "id": "p15",
+      "name": "Samsung Galaxy Watch 5",
+      "category": "smartwatch",
+      "price": 215000,
+      "stock": 16,
+      "images": []
+    },
+
+    {
+      "id": "p16",
+      "name": "AirPods Pro 2",
+      "category": "audio",
+      "price": 190000,
+      "stock": 30,
+      "images": []
+    },
+    {
+      "id": "p17",
+      "name": "Oraimo FreePods 4",
+      "category": "audio",
+      "price": 19500,
+      "stock": 40,
+      "images": []
+    },
+    {
+      "id": "p18",
+      "name": "JBL Flip 6 Speaker",
+      "category": "audio",
+      "price": 105000,
+      "stock": 12,
+      "images": []
+    },
+
+    {
+      "id": "p19",
+      "name": "PlayStation 5",
+      "category": "gaming",
+      "price": 780000,
+      "stock": 6,
+      "images": []
+    },
+    {
+      "id": "p20",
+      "name": "PlayStation 4 Slim",
+      "category": "gaming",
+      "price": 350000,
+      "stock": 9,
+      "images": []
+    },
+
+    {
+      "id": "p21",
+      "name": "Canon EOS 250D",
+      "category": "camera",
+      "price": 480000,
+      "stock": 4,
+      "images": []
+    },
+
+    {
+      "id": "p22",
+      "name": "Oraimo 20000mAh Power Bank",
+      "category": "power",
+      "price": 22000,
+      "stock": 35,
+      "images": []
+    },
+    {
+      "id": "p23",
+      "name": "Anker 20W Fast Charger",
+      "category": "accessory",
+      "price": 12000,
+      "stock": 50,
+      "images": []
+    },
+    {
+      "id": "p24",
+      "name": "Apple Lightning Cable",
+      "category": "accessory",
+      "price": 9000,
+      "stock": 60,
+      "images": []
+    },
+    {
+      "id": "p25",
+      "name": "Samsung USB-C Cable",
+      "category": "accessory",
+      "price": 6500,
+      "stock": 55,
+      "images": []
+    },
+    {
+      "id": "p26",
+      "name": "iPhone 14 Pro Max Pouch",
+      "category": "accessory",
+      "price": 3500,
+      "stock": 40,
+      "images": []
+    },
+    {
+      "id": "p27",
+      "name": "Universal Screen Guard",
+      "category": "accessory",
+      "price": 2000,
+      "stock": 100,
+      "images": []
+    },
+
+    {
+      "id": "p28",
+      "name": "MTN 4G MiFi",
+      "category": "network",
+      "price": 19500,
+      "stock": 20,
+      "images": []
+    },
+    {
+      "id": "p29",
+      "name": "Huawei B310 Router",
+      "category": "network",
+      "price": 35000,
+      "stock": 10,
+      "images": []
+    },
+
+    {
+      "id": "p30",
+      "name": "Google Chromecast",
+      "category": "smart_home",
+      "price": 28000,
+      "stock": 14,
+      "images": []
+    },
+    {
+      "id": "p31",
+      "name": "Amazon Fire TV Stick",
+      "category": "smart_home",
+      "price": 26000,
+      "stock": 18,
+      "images": []
+    },
+
+    {
+      "id": "p32",
+      "name": "Logitech Wireless Mouse M185",
+      "category": "computer_accessory",
+      "price": 7500,
+      "stock": 50,
+      "images": []
+    },
+    {
+      "id": "p33",
+      "name": "HP DeskJet 2720 Printer",
+      "category": "printer",
+      "price": 69000,
+      "stock": 6,
+      "images": []
+    },
+    {
+      "id": "p34",
+      "name": "Sandisk 128GB Flash Drive",
+      "category": "storage",
+      "price": 10500,
+      "stock": 80,
+      "images": []
+    }
+  ]
+}

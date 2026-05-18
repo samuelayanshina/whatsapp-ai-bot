@@ -1,0 +1,20 @@
+{
+  "2347039689465@c.us": [
+    {
+      "productId": "p1",
+      "name": "iPhone 14 Pro",
+      "price": 850000,
+      "qty": 1
+    }
+  ],
+  "whatsapp:+2348114587431": [
+    {
+      "name": "iphone",
+      "qty": 1
+    },
+    {
+      "name": "to cart",
+      "qty": 1
+    }
+  ]
+}
