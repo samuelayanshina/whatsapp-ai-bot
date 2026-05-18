@@ -4,3 +4,4 @@ whatsapp-session/
 .env
 .DS_Store
 backups/
+server/.env
