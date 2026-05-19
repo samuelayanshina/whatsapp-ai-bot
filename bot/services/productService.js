@@ -133,8 +133,9 @@ function loadProducts() {
 function normalize(text) {
   return text
     .toLowerCase()
-    .replace(/(how much|price|do you have|i want|can i get|add|buy)/gi, "")
+    .replace(/(how far|how much|price of|price|do you have|i want|i wan|can i get|add|buy|you get|you have|u get|boss|omo|abeg|wetin|check|show me|tell me|get me|make i see|i dey find|any|got any|have you got|wey you get)/gi, "")
     .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ")
     .trim();
 }
 

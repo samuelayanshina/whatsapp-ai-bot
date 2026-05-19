@@ -4,5 +4,4 @@ whatsapp-session/
 .wwebjs_cache/
 .wwebjs_auth/
 .env
-data/*.json
 whatsapp-ai-bot-clean/
