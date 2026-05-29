@@ -43,35 +43,61 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-  const from = req.body.From;
-  const text = req.body.Body;
+  // Acknowledge immediately
+  res.sendStatus(200);
 
-  console.log("📩 MESSAGE FROM:", from, "=>", text);
-
-  // ── Respond to Twilio immediately with empty TwiML ──────────────────
-  // This stops Twilio from treating our HTTP response as a message reply
-  // (which was causing the "OK" bubble to appear in WhatsApp)
-  const twiml = new twilio.twiml.MessagingResponse();
-  res.writeHead(200, { "Content-Type": "text/xml" });
-  res.end(twiml.toString());
-
-  // ── Process and reply asynchronously ────────────────────────────────
   try {
-    const reply = await handleConversation("demo-shop", from, { body: text });
+    const body = req.body;
+
+    // Meta sends messages in entry[].changes[].value.messages[]
+    const entry = body?.entry?.[0];
+    const change = entry?.changes?.[0];
+    const value = change?.value;
+    const messages = value?.messages;
+
+    if (!messages || messages.length === 0) return;
+
+    const message = messages[0];
+    const from = message.from; // customer phone number
+    const text = message?.text?.body;
+
+    if (!text) return;
+
+    console.log("📩 META MESSAGE FROM:", from, "=>", text);
+
+    const reply = await handleConversation("demo-shop", `whatsapp:${from}`, { body: text });
 
     if (!reply?.text) return;
 
-    // Human-like typing delay — longer replies = longer wait
+    // Human typing delay
     const delay = reply.typingMs || 1200;
     await new Promise((resolve) => setTimeout(resolve, delay));
 
-    await client.messages.create({
-      from: "whatsapp:+14155238886",
-      to: from,
-      body: reply.text,
-    });
+    // Reply via Meta API
+    const phoneNumberId = process.env.META_PHONE_NUMBER_ID;
+    const accessToken = process.env.META_ACCESS_TOKEN;
 
-    console.log(`✅ [${reply.tone}] Reply sent to ${from}: "${reply.text}"`);
+    const response = await fetch(
+      `https://graph.facebook.com/v25.0/${phoneNumberId}/messages`,
+      {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messaging_product: "whatsapp",
+          to: from,
+          type: "text",
+          text: { body: reply.text },
+        }),
+      }
+    );
+
+    const result = await response.json();
+    console.log(`✅ [${reply.tone}] Meta reply sent to ${from}: "${reply.text}"`);
+    if (result.error) console.error("❌ Meta error:", result.error.message);
+
   } catch (err) {
     console.error("❌ Error:", err.message);
   }
